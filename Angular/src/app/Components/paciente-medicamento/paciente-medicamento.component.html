@@ -1,0 +1,14 @@
+<app-paciente-navbar></app-paciente-navbar>
+<br>
+<div class="container container-md">
+  <div class="row">
+    <div class="col-md-3 my-5 text-center" *ngFor="let card of cardsData">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{card.nombre}}</h5>
+          <p class="card-text">{{card.descripcion}}</p>
+          <a class="btn btn-primary">Q. {{card.precio}}</a>
+        </div>
+      </div>      
+    </div>
+</div>

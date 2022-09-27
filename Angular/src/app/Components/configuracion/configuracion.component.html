@@ -1,0 +1,104 @@
+<!-- SE MOSTRARA INFO SOLO PARA PACIENTES -->
+<div *ngIf="path == '/paciente/configuracion'">
+    <app-paciente-navbar></app-paciente-navbar>
+    <form id="registro" class="container-md" style="text-align: center;">
+        <div id="logo" class="mb-3">
+            <h4>Modificar Datos</h4>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Nombre(s)</label>
+            <input type="text" class="form-control" value="{{this.sesion.nombre}}" [(ngModel)]="this.paciente.nombre" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Apellido(s)</label>
+            <input type="email" class="form-control" value="{{this.sesion.apellido}}" [(ngModel)]="this.paciente.apellido" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" value="{{this.sesion.fechaNac}}" [(ngModel)]="this.paciente.fechaNac" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nombre de Usuario</label>
+            <input type="text" class="form-control" value="{{this.sesion.usuario}}" [(ngModel)]="this.paciente.usuario" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="text" class="form-control" value="{{this.sesion.password}}" [(ngModel)]="this.paciente.password" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+              <button class="btn btn-success" (click)="actualizar()">
+                  Actualizar
+              </button>
+          </div>
+    </form>
+</div>
+
+<!-- SE MOSTRARA INFO SOLO PARA ENFERMERAS -->
+<div *ngIf="path == '/enfermera/configuracion'">
+    <app-enfermera-navbar></app-enfermera-navbar>
+    <form id="registro" class="container-md" style="text-align: center;">
+        <div id="logo" class="mb-3">
+            <h4>Modificar Datos</h4>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Nombre(s)</label>
+            <input type="text" class="form-control" value="{{this.sesion.nombre}}" [(ngModel)]="this.enfermera.nombre" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Apellido(s)</label>
+            <input type="email" class="form-control" value="{{this.sesion.apellido}}" [(ngModel)]="this.enfermera.apellido" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" value="{{this.sesion.fechaNac}}" [(ngModel)]="this.enfermera.fechaNac" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nombre de Usuario</label>
+            <input type="text" class="form-control" value="{{this.sesion.usuario}}" [(ngModel)]="this.enfermera.usuario" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="text" class="form-control" value="{{this.sesion.password}}" [(ngModel)]="this.enfermera.password" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+              <button class="btn btn-success" (click)="actualizar()">
+                  Actualizar
+              </button>
+          </div>
+    </form>
+</div>
+
+<!-- SE MOSTRARA INFO SOLO PARA DOCTORES -->
+<div *ngIf="path == '/doctor/configuracion'">
+    <app-doctor-navbar></app-doctor-navbar>
+    <form id="registro" class="container-md" style="text-align: center;">
+        <div id="logo" class="mb-3">
+            <h4>Modificar Datos</h4>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Nombre(s)</label>
+            <input type="text" class="form-control" value="{{this.sesion.nombre}}" [(ngModel)]="this.doctor.nombre" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Apellido(s)</label>
+            <input type="email" class="form-control" value="{{this.sesion.apellido}}" [(ngModel)]="this.doctor.apellido" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" value="{{this.sesion.fechaNac}}" [(ngModel)]="this.doctor.fechaNac" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nombre de Usuario</label>
+            <input type="text" class="form-control" value="{{this.sesion.usuario}}" [(ngModel)]="this.doctor.usuario" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="text" class="form-control" value="{{this.sesion.password}}" [(ngModel)]="this.doctor.password" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+              <button class="btn btn-success" (click)="actualizar()">
+                  Actualizar
+              </button>
+          </div>
+    </form>
+</div>

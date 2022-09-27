@@ -1,0 +1,11 @@
+/* ACA ESTA SERVIDOR Y PAGINA WEEB */
+Enlace Repositorio Git
+https://github.com/Dennis-Comz/Proyecto2.git
+
+
+Enlace donde se despliega la API en Python
+http://13.58.12.93:5000/
+ec2-13-58-12-93.us-east-2.compute.amazonaws.com
+
+Enlace donde se despliega la pagina web
+http://proyecto2ipc1.s3-website.us-east-2.amazonaws.com/

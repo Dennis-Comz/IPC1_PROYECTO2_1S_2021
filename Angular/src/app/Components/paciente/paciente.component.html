@@ -1,0 +1,26 @@
+<app-paciente-navbar></app-paciente-navbar>
+<br>
+<div id="registro" class="container-sm">
+    <div class="mb-3">
+        <h1>Generar Cita</h1>
+    </div>
+    <br>
+    <br>
+    <div class="mb-3">
+        <label class="form-label">Fecha</label>
+        <input type="date" class="form-control" [(ngModel)]="this.informacion.fecha" [ngModelOptions]="{standalone: true}">
+        <label class="form-label">Hora</label>
+        <input type="time" class="form-control" [(ngModel)]="this.informacion.hora" [ngModelOptions]="{standalone: true}">
+    </div>
+    <br>
+    <br>
+    <div class="mb-3">
+        <label class="form-label">Motivo</label>
+        <textarea class="form-control" aria-label="With textarea" placeholder="Ingrese el Motivo de su cita" [(ngModel)]="this.informacion.motivo" [ngModelOptions]="{standalone: true}"></textarea>
+    </div>
+    <br>
+    <br>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary" (click)="solicitar()">Solicitar</button>
+    </div>
+</div>

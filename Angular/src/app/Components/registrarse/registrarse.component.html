@@ -1,0 +1,47 @@
+<body>
+<form id="registro" class="container-sm">
+    <div id="logo" class="mb-3">
+      <h1>UHospital</h1>
+      <h3>Registro de Pacientes</h3>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Nombre(s)</label>
+      <input type="text" class="form-control" placeholder="Ingrese sus Nombres" [(ngModel)]="this.paciente.name" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Apellido(s)</label>
+      <input type="email" class="form-control" placeholder="Ingrese sus Apellidos" [(ngModel)]="this.paciente.lastnane" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Fecha de Nacimiento</label>
+      <input type="date" class="form-control" placeholder="dd/mm/yyyy" [(ngModel)]="this.paciente.birthday" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Sexo</label>
+      <select class="form-select form-select-sm" aria-label=".form-select-sm example" [(ngModel)]="this.paciente.gender" [ngModelOptions]="{standalone: true}" required="required"> 
+        <option value="1">Masculino</option>
+        <option value="2">Femenino</option>
+      </select>  
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Nombre de Usuario</label>
+      <input type="text" class="form-control" placeholder="Ingrese su usuario" [(ngModel)]="this.paciente.username" [ngModelOptions]="{standalone: true}" required="required">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" class="form-control" placeholder="Ingrese su Contraseña" [(ngModel)]="this.paciente.password" [ngModelOptions]="{standalone: true}" required="required">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Telefono</label>
+      <input type="number" class="form-control" placeholder="Numero Tel." [(ngModel)]="this.paciente.phone" [ngModelOptions]="{standalone: true}" required="required">
+    </div>
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary" (click)="registrar()">Registrarse</button>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">¿Ya tienes un usuario? Inicia Sesion</label>
+      <button type="submit" class="btn btn-outline-secondary">
+        <a class="nav-link" routerLink="/login">Iniciar Sesion</a></button>
+    </div>
+</form>
+</body>

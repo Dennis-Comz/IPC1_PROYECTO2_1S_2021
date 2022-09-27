@@ -1,0 +1,20 @@
+#slides{
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 5%;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+
+#slides img{
+    height: 500px;
+    border-radius: 2%;
+}
+
+#info{
+    margin-top: 3%;
+}
+
+#info h2{
+    text-align: center;
+}

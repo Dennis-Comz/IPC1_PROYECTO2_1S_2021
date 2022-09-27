@@ -1,0 +1,60 @@
+<app-enfermera-navbar></app-enfermera-navbar>
+<br>
+<div class="container-md">
+    <mat-tab-group mat-align-tabs="center">
+        <mat-tab label="Listado Citas">
+            <table class="table table-stripe table-bordered">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Motivo</th>
+                        <th>Doctor</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of tableData">
+                        <td>{{data.No}}</td>
+                        <td>{{data.Fecha}}</td>
+                        <td>{{data.Hora}}</td>
+                        <td>{{data.Motivo}}</td>
+                        <td>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" [(ngModel)]="this.cita.Doctor" [ngModelOptions]="{standalone: true}">
+                                <option value="" disabled selected>Asigne un Doctor</option>
+                                <option *ngFor="let doc of tableDataDoctor" value="{{doc.Doctor}}" >{{doc.Doctor}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button class="btn btn-success" (click)="citaAceptada(data.No)">Aceptar</button>
+                            <button class="btn btn-danger" (click)="citaEliminida(data.No)">Elminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-tab>
+        <mat-tab label="Citas Aceptadas">
+            <table class="table table-stripe table-bordered">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Motivo</th>
+                        <th>Doctor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cita of tableDataAceptada">
+                        <td>{{cita.No}}</td>
+                        <td>{{cita.Fecha}}</td>
+                        <td>{{cita.Hora}}</td>
+                        <td>{{cita.Motivo}}</td>
+                        <td>{{cita.Doctor}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-tab>
+    </mat-tab-group>
+</div>

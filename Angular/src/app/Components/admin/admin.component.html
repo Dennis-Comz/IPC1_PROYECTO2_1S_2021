@@ -1,0 +1,45 @@
+<app-admin-navbar></app-admin-navbar>
+
+<br>
+<div class="container-sm">
+    <form>
+        <mat-tab-group mat-align-tabs="center">
+            <mat-tab label="Pacientes">
+                <div class="form-group" style="text-align: center;">
+                    <br>
+                    <label class="form-label">Seleccionar Archivo</label>
+                    <Ngx-CSVtoJSON (onConvert)="convert($event, 'paciente')" (onFail)="onError($event)"></Ngx-CSVtoJSON>
+                    <br>
+                    <button type="submit" class="btn btn-primary" (click)="carga()">Cargar Pacientes</button>
+                </div>
+            </mat-tab>
+            <mat-tab label="Doctores">
+                <div class="form-group" style="text-align: center;">
+                    <br>
+                    <label class="form-label">Seleccionar Archivo</label>
+                    <Ngx-CSVtoJSON (onConvert)="convert($event, 'doctores')" (onFail)="onError($event)"></Ngx-CSVtoJSON>
+                    <br>
+                    <button type="submit" class="btn btn-primary" (click)="carga()">Cargar Doctores</button>
+                </div>
+            </mat-tab>
+            <mat-tab label="Enfermeras">
+                <div class="form-group" style="text-align: center;">
+                    <br>
+                    <label class="form-label">Seleccionar Archivo</label>
+                    <Ngx-CSVtoJSON (onConvert)="convert($event, 'enfermeras')" (onFail)="onError($event)"></Ngx-CSVtoJSON>
+                    <br>
+                    <button type="submit" class="btn btn-primary" (click)="carga()">Cargar Enfermeras</button>
+                </div>
+            </mat-tab>
+            <mat-tab label="Medicamentos">
+                <div class="form-group" style="text-align: center;">
+                    <br>
+                    <label class="form-label">Seleccionar Archivo</label>
+                    <Ngx-CSVtoJSON (onConvert)="convert($event, 'medicamentos')" (onFail)="onError($event)"></Ngx-CSVtoJSON>
+                    <br>
+                    <button type="submit" class="btn btn-primary" (click)="carga()">Cargar Medicamentos</button>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </form>
+</div>
