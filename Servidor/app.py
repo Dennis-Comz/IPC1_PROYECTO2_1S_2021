@@ -1,48 +1,21 @@
-from flask import Flask, request, jsonify
-from flask_restful import Api
-from flask_cors import CORS, cross_origin
 import json
+from flask_restful import Api
+from flask import Flask, request
+from flask_cors import CORS
+import Appointment, Doctor, Medicine, Nurse, Patient
 
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-class citasUsuarios:
-    def __init__(self, idUser, fecha, hora, motivo):
-        self.idUser = idUser
-        self.fecha = fecha
-        self.hora = hora
-        self.motivo = motivo
-    
-    def to_dict(self):
-        return {'id': self.idUser, 'fecha': self.fecha, 'hora': self.hora, 'motivo': self.motivo}
-
-class citasAceptadas:
-    def __init__(self, no, fecha, hora, motivo, doctor):
-        self.no = no
-        self.fecha = fecha
-        self.hora = hora
-        self.motivo = motivo
-        self.doctor = doctor
-    
-    def to_dict(self):
-        return {'no': self.no, 'fecha': self.fecha, 'hora': self.hora, 'motivo': self.motivo, 'doctor': self.doctor}
-        
-          
-pacientes = list()
-doctores = list()
-enfermeras = list()
-medicamentos = list()
-sesiones = list()
-citas = list()
-citasAcep = list()
+patients, doctors, nurses, medicines, sessions, appointments, appointmentsAccep = list(), list(), list(), list(), list(), list(), list()
 
 @app.route('/', methods = ['GET'])
 def home():
     return 'API FUNCIONA'
 
-@app.route('/verificar', methods = ['POST'])
-def postVerificar():
+@app.route('/login', methods = ['POST'])
+def postLogin():
     content = request.get_json()
     username = content['username']
     password = content['password']
@@ -50,23 +23,23 @@ def postVerificar():
     if (username == 'admin' and password == '1234'):
             return {'path': 'admin'}
     else:        
-        for value in pacientes:
+        for value in patients:
             if username == value.name and password == value.password:
-                sesiones.append(value)            
+                sessions.append(value)            
                 return {'path': 'paciente'}
-        for value in doctores:
+        for value in doctors:
             if username == value.name and password == value.password:
-                sesiones.append(value)
+                sessions.append(value)
                 return {'path': 'doctor'}
-        for value in enfermeras:
+        for value in nurses:
             if username == value.name and password == value.password:
-                sesiones.append(value)
+                sessions.append(value)
                 return {'path': 'enfermera'}
     
     return {'dato': 'NO'}
 
-@app.route('/registrar', methods = ['POST'])
-def postUsuario():
+@app.route('/add-patient', methods = ['POST'])
+def postAddPatient():
     content = request.get_json()
     name = content['name']
     lastname = content['lastname']
@@ -75,11 +48,11 @@ def postUsuario():
     password = content['password']
     phone = content['phone']
     
-    pacientes.append(Persona(name,lastname,birthday,gender,password,phone))
+    patients.append(Patient(name,lastname,birthday,gender,password,phone))
     return {'message':'REGISTRADO CORRECTAMENTE'}
 
-@app.route('/cargarPacientes', methods=['POST'])
-def postCargarPacientes(): 
+@app.route('/load-patients', methods=['POST'])
+def postLoadPatients(): 
     content = request.get_json()
     contador = 0
     global name 
@@ -111,12 +84,12 @@ def postCargarPacientes():
             contador += 1
             if contador == 6:
                 contador = 0
-                pacientes.append(Persona(name,lastname,birthday,gender,password, phone))
+                patients.append(Patient(name,lastname,birthday,gender,password, phone))
 
-    return {'message': 'Pacientes cargados'}
+    return {'message': 'patients cargados'}
     
-@app.route('/cargarDoctores', methods=['POST'])
-def postCargarDoctores():
+@app.route('/load-doctors', methods=['POST'])
+def postLoadDoctors():
     content = request.get_json()
     contador = 0
     global name 
@@ -150,12 +123,12 @@ def postCargarDoctores():
             contador += 1
             if contador > 6:
                 contador = 0
-                doctores.append(Doctor(name,lastname,birthday,gender,password,especialidad,phone))
+                doctors.append(Doctor(name,lastname,birthday,gender,password,especialidad,phone))
     
-    return {'message': 'Doctores cargados'}
+    return {'message': 'doctors cargados'}
 
-@app.route('/cargarEnfermeras', methods=['POST'])
-def postCargarEnfermeras(): 
+@app.route('/load-nurses', methods=['POST'])
+def postLoadNurses(): 
     content = request.get_json()
     contador = 0
     global name 
@@ -187,12 +160,12 @@ def postCargarEnfermeras():
             contador += 1
             if contador == 6:
                 contador = 0
-                enfermeras.append(Persona(name,lastname,birthday,gender,password,phone))
+                nurses.append(Patient(name,lastname,birthday,gender,password,phone))
             
-    return {'message': 'Enfermeras cargados'}
+    return {'message': 'nurses cargados'}
 
-@app.route('/cargarMedicamentos', methods=['POST'])
-def postCargarMedicamentos():
+@app.route('/load-medicines', methods=['POST'])
+def postLoadMedicines():
     content = request.get_json()
     for i in content['result']:
         if i['Nombre'] != '':
@@ -201,61 +174,61 @@ def postCargarMedicamentos():
             description = i['Descripcion'] 
             quantity = i['Cantidad']
             
-            medicamentos.append(Medicamento(name,price,description,quantity))
+            medicines.append(Medicine(name,price,description,quantity))
     
-    return {'message': 'Medicamentos cargados'}
+    return {'message': 'medicines cargados'}
                    
-# Getters de Pacientes y enfermeras
-@app.route('/cantidadPacientes', methods=['GET'])
-def getCantidadPacientes():
-    return {'cantidad': str(len(pacientes))}
+# Getters de patients y nurses
+@app.route('/cantidadpatients', methods=['GET'])
+def getCantidadpatients():
+    return {'cantidad': str(len(patients))}
 
-@app.route('/datosPacientes', methods=['GET'])
-def getDatosPacientes():
-    results = [obj.to_dict() for obj in pacientes]
+@app.route('/datospatients', methods=['GET'])
+def getDatospatients():
+    results = json.dumps([obj for obj in patients])
     jsdata = json.dumps({"results": results})
     return jsdata
 
-@app.route('/cantidadEnfermeras', methods=['GET'])
-def getCantidadEnfermeras():
-    return {'cantidad': str(len(enfermeras))}
+@app.route('/cantidadnurses', methods=['GET'])
+def getCantidadnurses():
+    return {'cantidad': str(len(nurses))}
     
-@app.route('/datosEnfermeras', methods=['GET'])
-def getDatosEnfermeras():
-    results = [obj.to_dict() for obj in enfermeras]
+@app.route('/datosnurses', methods=['GET'])
+def getDatosnurses():
+    results = [obj.to_dict() for obj in nurses]
     jsdata = json.dumps({"results": results})
     return jsdata
 
-# Getters de Doctores
-@app.route('/cantidadDoctores', methods=['GET'])
-def getCantidadDoctores():
-    return {'cantidad': str(len(doctores))}
+# Getters de doctors
+@app.route('/cantidaddoctors', methods=['GET'])
+def getCantidaddoctors():
+    return {'cantidad': str(len(doctors))}
 
-@app.route('/datosDoctores', methods=['GET'])
-def getDatosDoctores():
-    results = [obj.to_dict() for obj in doctores]
+@app.route('/datosdoctors', methods=['GET'])
+def getDatosdoctors():
+    results = [obj.to_dict() for obj in doctors]
     jsdata = json.dumps({"results": results})
     return jsdata
 
-# Getters de Medicamentos
-@app.route('/cantidadMedicamentos', methods=['GET'])
-def getCantidadMedicamentos():
-    return {'cantidad': str(len(medicamentos))}
+# Getters de medicines
+@app.route('/cantidadmedicines', methods=['GET'])
+def getCantidadmedicines():
+    return {'cantidad': str(len(medicines))}
 
-@app.route('/datosMedicamentos', methods=['GET'])
-def getDatosMedicamentos():
-    results = [obj.to_dict() for obj in medicamentos]
+@app.route('/datosmedicines', methods=['GET'])
+def getDatosmedicines():
+    results = [obj.to_dict() for obj in medicines]
     jsdata = json.dumps({"results": results})
     return jsdata
 
 @app.route('/cerrarSesion', methods=['GET'])
 def postCerrarSesion():
-    sesiones.clear()
+    sessions.clear()
     return {'message': 'Sesion Cerrada'}
 
 @app.route('/configuracion', methods=['GET'])
 def getConfiguracion():
-    results = [obj.to_dict() for obj in sesiones]
+    results = [obj.to_dict() for obj in sessions]
     jsdata = json.dumps({"results": results})
     return jsdata
 
@@ -267,16 +240,16 @@ def postCita():
     motivo = content['motivo']
     username = content['username']
 
-    citas.append(citasUsuarios(username, fecha, hora, motivo))
+    appointments.append(Appointment(username, fecha, hora, motivo))
     return {'message': 'Cita Generada', 'username': username}
     
 @app.route('/cantidadCitas', methods=['GET'])
 def getCantidadCitas():
-    return {'cantidad': str(len(citas))}
+    return {'cantidad': str(len(appointments))}
 
 @app.route('/datosCitas', methods=['GET'])
 def getDatosCitas():
-    results = [obj.to_dict() for obj in citas]
+    results = [obj.to_dict() for obj in appointments]
     jsdata = json.dumps({"results": results})
     return jsdata
 
@@ -289,12 +262,12 @@ def postCitasAceptadas():
     motivo = content['Motivo']
     doctor = content['Doctor']
     
-    citasAcep.append(citasAceptadas(numero,fecha,hora,motivo,doctor))
+    appointments.append(Appointment(numero,fecha,hora,motivo,doctor))
     return {'message': 'Cita Aceptada'}
 
 @app.route('/aceptadas', methods=['GET'])
 def getAceptadas():
-    results = [obj.to_dict() for obj in citasAcep]
+    results = [obj.to_dict() for obj in appointments]
     jsdata = json.dumps({"results": results})
     return jsdata
 
@@ -308,29 +281,29 @@ def postActualizar():
     fechaNac = content['fechaNac']
     oldUser = content['oldUsuario']
     
-    for i in range(0, len(pacientes)):
-        if pacientes[i].username == oldUser:
-            pacientes[i].name = name
-            pacientes[i].lastname = lastname
-            pacientes[i].username = username
-            pacientes[i].password = password
-            pacientes[i].birthday = fechaNac
+    for i in range(0, len(patients)):
+        if patients[i].username == oldUser:
+            patients[i].name = name
+            patients[i].lastname = lastname
+            patients[i].username = username
+            patients[i].password = password
+            patients[i].birthday = fechaNac
             return {'message': 'Actualizado'}
-    for i in range(0, len(enfermeras)):
-        if enfermeras[i].username == oldUser:
-            enfermeras[i].name = name
-            enfermeras[i].lastname = lastname
-            enfermeras[i].username = username
-            enfermeras[i].password = password
-            enfermeras[i].birthday = fechaNac
+    for i in range(0, len(nurses)):
+        if nurses[i].username == oldUser:
+            nurses[i].name = name
+            nurses[i].lastname = lastname
+            nurses[i].username = username
+            nurses[i].password = password
+            nurses[i].birthday = fechaNac
             return {'message': 'Actualizado'}
-    for i in range(0, len(doctores)):
-        if pacientes[i].username == oldUser:
-            doctores[i].name = name
-            doctores[i].lastname = lastname
-            doctores[i].username = username
-            doctores[i].password = password
-            doctores[i].birthday = fechaNac
+    for i in range(0, len(doctors)):
+        if patients[i].username == oldUser:
+            doctors[i].name = name
+            doctors[i].lastname = lastname
+            doctors[i].username = username
+            doctors[i].password = password
+            doctors[i].birthday = fechaNac
             return {'message': 'Actualizado'}
     
         
