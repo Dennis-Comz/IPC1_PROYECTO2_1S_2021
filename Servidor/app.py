@@ -7,47 +7,6 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-class Persona:
-    
-    def __init__(self, name, lastname, birthday, gender, password, phone):
-        self.name = name
-        self.lastname = lastname
-        self.birthday = birthday
-        self.gender = gender
-        self.password = password
-        self.phone = phone
-
-    def to_dict(self):
-        return {"name": self.name, "lastname": self.lastname, "birthday": self.birthday,
-                "gender": self.gender, "password": self.password,
-                'phone': self.phone}
-
-class Doctor:
-    def __init__(self, name, lastname, birthday, gender, password, especialidad, phone):
-        self.name = name
-        self.lastname = lastname
-        self.birthday = birthday
-        self.gender = gender
-        self.password = password
-        self.especialidad = especialidad
-        self.phone = phone
-
-    def to_dict(self):
-        return {"name": self.name, "lastname": self.lastname, "birthday": self.birthday,
-                "gender": self.gender, "password": self.password,
-                "especialidad": self.especialidad, 'phone': self.phone}
-
-class Medicamento:
-    def __init__(self, name, price, description, quantity):
-        self.name = name
-        self.price = price
-        self.description = description
-        self.quantity = quantity
-    
-    def to_dict(self):
-        return {"name": self.name, "price": self.price, "description": self.description,
-                "quantity": self.quantity}
-
 class citasUsuarios:
     def __init__(self, idUser, fecha, hora, motivo):
         self.idUser = idUser
