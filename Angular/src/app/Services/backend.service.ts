@@ -8,19 +8,19 @@ export class BackendService {
   constructor(private http: HttpClient) { }
 
   verificar(persona:any){
-    return this.http.post(`http://192.168.0.11:5000/verificar`, persona);
+    return this.http.post(`http://192.168.0.11:5000/login`, persona);
   }
 
   cerrarSesion(){
-    return this.http.get(`http://192.168.0.11:5000/cerrarSesion`);
+    return this.http.get(`http://192.168.0.11:5000/logout`);
   }
 
   configuracion(){
-    return this.http.get(`http://192.168.0.11:5000/configuracion`);
+    return this.http.get(`http://192.168.0.11:5000/config`);
   }
   
   registrarPaciente(paciente:any){
-    return this.http.post(`http://192.168.0.11:5000/registrar`, paciente);
+    return this.http.post(`http://192.168.0.11:5000/add-patient`, paciente);
   }
 
   cargarPacientes(pacientes:any){
@@ -28,47 +28,46 @@ export class BackendService {
   }
   
   cargarDoctores(doctores:any){
-    return this.http.post( `http://192.168.0.11:5000/cargarDoctores`, doctores);
+    return this.http.post( `http://192.168.0.11:5000/load-doctors`, doctores);
   }
 
   cargarEnfermeras(enfermeras:any){
-    return this.http.post( `http://192.168.0.11:5000/cargarEnfermeras`, enfermeras);
+    return this.http.post( `http://192.168.0.11:5000/load-nurses`, enfermeras);
   }
 
   cargarMedicamentos(medicamentos:any){
-    return this.http.post( `http://192.168.0.11:5000/cargarMedicamentos`, medicamentos);
+    return this.http.post( `http://192.168.0.11:5000/load-medicines`, medicamentos);
   }
 
   generarCita(datos:any){
-    return this.http.post(`http://192.168.0.11:5000/cita`, datos);
+    return this.http.post(`http://192.168.0.11:5000/appointment`, datos);
   }
 
   postActualizar(value:any){
-    return this.http.post(`http://192.168.0.11:5000/actualizar`, value);
+    return this.http.post(`http://192.168.0.11:5000/update`, value);
   }
 
-  extraerDatos(){return this.http.get(`http://192.168.0.11:5000/extraerDatos`);}
   // Get pacientes
-  getCantidadPacientes(){return this.http.get(`http://192.168.0.11:5000/cantidadPacientes`);}
-  getDataPacientes(){return this.http.get(`http://192.168.0.11:5000/datosPacientes`);}
+  getCantidadPacientes(){return this.http.get(`http://192.168.0.11:5000/patients-quantity`);}
+  getDataPacientes(){return this.http.get(`http://192.168.0.11:5000/patients-data`);}
 
   // Get Doctores
-  getCantidadDoctores(){return this.http.get(`http://192.168.0.11:5000/cantidadDoctores`);}
-  getDataDoctores(){return this.http.get(`http://192.168.0.11:5000/datosDoctores`);}
+  getCantidadDoctores(){return this.http.get(`http://192.168.0.11:5000/doctors-quantity`);}
+  getDataDoctores(){return this.http.get(`http://192.168.0.11:5000/doctors-data`);}
 
   // Get Enfermeras
-  getCantidadEnfermeras(){return this.http.get(`http://192.168.0.11:5000/cantidadEnfermeras`);}
-  getDataEnfermeras(){return this.http.get(`http://192.168.0.11:5000/datosEnfermeras`);}
+  getCantidadEnfermeras(){return this.http.get(`http://192.168.0.11:5000/nurses-quantity`);}
+  getDataEnfermeras(){return this.http.get(`http://192.168.0.11:5000/nurses-data`);}
 
   // Get Medicamentos
-  getCantidadMedicamentos(){return this.http.get(`http://192.168.0.11:5000/cantidadMedicamentos`);}
-  getDataMedicamentos(){return this.http.get(`http://192.168.0.11:5000/datosMedicamentos`);}
+  getCantidadMedicamentos(){return this.http.get(`http://192.168.0.11:5000/medicines-quantity`);}
+  getDataMedicamentos(){return this.http.get(`http://192.168.0.11:5000/medicines-data`);}
 
   //  Get Citas
-  getCantidadCitas(){return this.http.get(`http://192.168.0.11:5000/cantidadCitas`);}
-  getDataCitas(){return this.http.get(`http://192.168.0.11:5000/datosCitas`);}
+  getCantidadCitas(){return this.http.get(`http://192.168.0.11:5000/appointments-quantity`);}
+  getDataCitas(){return this.http.get(`http://192.168.0.11:5000/appointments-data`);}
 
   // Get citas aceptadas
-  postCitasAceptadas(cita:any){return this.http.post(`http://192.168.0.11:5000/citasAceptadas`, cita);}
-  getCitasAceptadas(){return this.http.get(`http://192.168.0.11:5000/aceptadas`);}
+  postCitasAceptadas(cita:any){return this.http.post(`http://192.168.0.11:5000/accept-appointment`, cita);}
+  getCitasAceptadas(){return this.http.get(`http://192.168.0.11:5000/appointments-accepted`);}
 }

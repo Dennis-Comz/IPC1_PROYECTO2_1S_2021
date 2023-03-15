@@ -66,149 +66,93 @@ def postLoadPatients():
 @app.route('/load-doctors', methods=['POST'])
 def postLoadDoctors():
     content = request.get_json()
-    contador = 0
-    global name 
-    global lastname
-    global birthday
-    global gender
-    global phone
-    for i in range(0, len(content['result'])):
-        for value in content['result'][i]:
-            # print(value + str(contador))
-            if contador == 0:
-                name = content['result'][i][str(value)]
-                # print(name)
-            elif contador == 1:
-                lastname = content['result'][i][str(value)]
-                # print(lastname)
-            elif contador == 2:
-                birthday = content['result'][i][str(value)]
-                # print(birthday)
-            elif contador == 3:
-                gender = content['result'][i][str(value)]
-                # print(gender)
-            elif contador == 4:
-                password = content['result'][i][str(value)]
-                # print(password)
-            elif contador == 5:
-                especialidad = content['result'][i][str(value)]
-            elif contador == 6:
-                phone = content['result'][i][str(value)]
-                # print(phone)
-            contador += 1
-            if contador > 6:
-                contador = 0
-                doctors.append(Doctor(name,lastname,birthday,gender,password,especialidad,phone))
+    for doctor_ in content['result']:
+        doctors.append(Doctor(doctor_['Nombre'],doctor_['Apellido'],doctor_['Fecha'],doctor_['Sexo'],doctor_['Contraseña'], doctor_['Especialidad'], doctor_['Teléfono']))
     
     return {'message': 'doctors cargados'}
 
 @app.route('/load-nurses', methods=['POST'])
 def postLoadNurses(): 
     content = request.get_json()
-    contador = 0
-    global name 
-    global lastname
-    global birthday
-    global gender
-    global phone
-    for i in range(0, len(content['result'])):
-        for value in content['result'][i]:
-            # print(value + str(contador))
-            if contador == 0:
-                name = content['result'][i][str(value)]
-                # print(name)
-            elif contador == 1:
-                lastname = content['result'][i][str(value)]
-                # print(lastname)
-            elif contador == 2:
-                birthday = content['result'][i][str(value)]
-                # print(birthday)
-            elif contador == 3:
-                gender = content['result'][i][str(value)]
-                # print(gender)
-            elif contador == 4:
-                password = content['result'][i][str(value)]
-                # print(password)
-            elif contador == 5:
-                phone = content['result'][i][str(value)]
-                # print(phone)
-            contador += 1
-            if contador == 6:
-                contador = 0
-                nurses.append(Patient(name,lastname,birthday,gender,password,phone))
+    for nurse_ in content['result']:
+        nurses.append(Nurse(nurse_['Nombre'],nurse_['Apellido'],nurse_['Fecha'],nurse_['Sexo'],nurse_['Contraseña'], nurse_['Teléfono']))
             
     return {'message': 'nurses cargados'}
 
 @app.route('/load-medicines', methods=['POST'])
 def postLoadMedicines():
     content = request.get_json()
-    for i in content['result']:
-        if i['Nombre'] != '':
-            name = i['Nombre']
-            price = i['Precio']
-            description = i['Descripcion'] 
-            quantity = i['Cantidad']
-            
-            medicines.append(Medicine(name,price,description,quantity))
+    for medicine_ in content['result']:
+        medicines.append(Medicine(medicine_['Nombre'],medicine_['Precio'],medicine_['Descripcion'],medicine_['Cantidad']))
     
     return {'message': 'medicines cargados'}
                    
 # Getters de patients y nurses
-@app.route('/cantidadpatients', methods=['GET'])
-def getCantidadpatients():
+@app.route('/patients-quantity', methods=['GET'])
+def getPatientsQuantity():
     return {'cantidad': str(len(patients))}
 
-@app.route('/datospatients', methods=['GET'])
-def getDatospatients():
+@app.route('/patients-data', methods=['GET'])
+def getPatientsData():
     results = json.dumps([obj for obj in patients])
     jsdata = json.dumps({"results": results})
     return jsdata
 
-@app.route('/cantidadnurses', methods=['GET'])
-def getCantidadnurses():
+@app.route('/nurses-quantity', methods=['GET'])
+def getNursesQuantity():
     return {'cantidad': str(len(nurses))}
     
-@app.route('/datosnurses', methods=['GET'])
-def getDatosnurses():
+@app.route('/nurses-data', methods=['GET'])
+def getNursesData():
     results = [obj.to_dict() for obj in nurses]
     jsdata = json.dumps({"results": results})
     return jsdata
 
 # Getters de doctors
-@app.route('/cantidaddoctors', methods=['GET'])
-def getCantidaddoctors():
+@app.route('/doctors-quantity', methods=['GET'])
+def getDoctorsQuantity():
     return {'cantidad': str(len(doctors))}
 
-@app.route('/datosdoctors', methods=['GET'])
-def getDatosdoctors():
+@app.route('/doctors-data', methods=['GET'])
+def getDoctorsData():
     results = [obj.to_dict() for obj in doctors]
     jsdata = json.dumps({"results": results})
     return jsdata
 
 # Getters de medicines
-@app.route('/cantidadmedicines', methods=['GET'])
-def getCantidadmedicines():
+@app.route('/medicines-quantity', methods=['GET'])
+def getMedicinesQuantity():
     return {'cantidad': str(len(medicines))}
 
-@app.route('/datosmedicines', methods=['GET'])
-def getDatosmedicines():
+@app.route('/medicines-data', methods=['GET'])
+def getMedicinesData():
     results = [obj.to_dict() for obj in medicines]
     jsdata = json.dumps({"results": results})
     return jsdata
 
-@app.route('/cerrarSesion', methods=['GET'])
-def postCerrarSesion():
+@app.route('/appointments-quantity', methods=['GET'])
+def getAppointmentsQuantity():
+    return {'cantidad': str(len(appointments))}
+
+@app.route('/appointments-data', methods=['GET'])
+def getAppointmentsData():
+    results = [obj.to_dict() for obj in appointments]
+    jsdata = json.dumps({"results": results})
+    return jsdata
+
+@app.route('/logout', methods=['GET'])
+def postLogout():
     sessions.clear()
     return {'message': 'Sesion Cerrada'}
 
-@app.route('/configuracion', methods=['GET'])
-def getConfiguracion():
+@app.route('/config', methods=['GET'])
+def getConfig():
     results = [obj.to_dict() for obj in sessions]
     jsdata = json.dumps({"results": results})
     return jsdata
 
-@app.route('/cita', methods=['POST'])
-def postCita():
+@app.route('/appointment', methods=['POST'])
+def postAppointment():
     content = request.get_json()
     fecha = content['fecha']
     hora = content['hora']
@@ -217,19 +161,9 @@ def postCita():
 
     appointments.append(Appointment(username, fecha, hora, motivo))
     return {'message': 'Cita Generada', 'username': username}
-    
-@app.route('/cantidadCitas', methods=['GET'])
-def getCantidadCitas():
-    return {'cantidad': str(len(appointments))}
 
-@app.route('/datosCitas', methods=['GET'])
-def getDatosCitas():
-    results = [obj.to_dict() for obj in appointments]
-    jsdata = json.dumps({"results": results})
-    return jsdata
-
-@app.route('/citasAceptadas', methods=['POST'])
-def postCitasAceptadas():
+@app.route('/accept-appointment', methods=['POST'])
+def postAcceptAppointment():
     content = request.get_json()
     numero = content['No']
     fecha = content['Fecha']
@@ -240,14 +174,14 @@ def postCitasAceptadas():
     appointments.append(Appointment(numero,fecha,hora,motivo,doctor))
     return {'message': 'Cita Aceptada'}
 
-@app.route('/aceptadas', methods=['GET'])
-def getAceptadas():
+@app.route('/appointments-accepted', methods=['GET'])
+def getAppointmentsAccepted():
     results = [obj.to_dict() for obj in appointments]
     jsdata = json.dumps({"results": results})
     return jsdata
 
-@app.route('/actualizar', methods=['POST'])
-def postActualizar():
+@app.route('/update', methods=['POST'])
+def postUpdate():
     content = request.get_json()
     name = content['nombre']
     lastname = content['apellido']
