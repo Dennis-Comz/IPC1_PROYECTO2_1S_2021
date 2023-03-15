@@ -22,6 +22,7 @@ export class AdminComponent implements OnInit {
   convert(objArray:any, rol:string){
     this.convertedObj = JSON.stringify(objArray, null, 2);
     if(rol == 'paciente'){
+      console.log(objArray)
       this.backend.cargarPacientes(objArray).subscribe(
         res=>{
           console.log(res)

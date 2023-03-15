@@ -2,7 +2,11 @@ import json
 from flask_restful import Api
 from flask import Flask, request
 from flask_cors import CORS
-import Appointment, Doctor, Medicine, Nurse, Patient
+from Appointment import Appointment
+from Doctor import Doctor
+from Medicine import Medicine
+from Nurse import Nurse
+from Patient import Patient
 
 app = Flask(__name__)
 CORS(app)
@@ -54,37 +58,8 @@ def postAddPatient():
 @app.route('/load-patients', methods=['POST'])
 def postLoadPatients(): 
     content = request.get_json()
-    contador = 0
-    global name 
-    global lastname
-    global birthday
-    global gender
-    global phone
-    for i in range(0, len(content['result'])):
-        for value in content['result'][i]:
-            # print(value + str(contador))
-            if contador == 0:
-                name = content['result'][i][str(value)]
-                # print(name)
-            elif contador == 1:
-                lastname = content['result'][i][str(value)]
-                # print(lastname)
-            elif contador == 2:
-                birthday = content['result'][i][str(value)]
-                # print(birthday)
-            elif contador == 3:
-                gender = content['result'][i][str(value)]
-                # print(gender)
-            elif contador == 4:
-                password = content['result'][i][str(value)]
-                # print(password)
-            elif contador == 5:
-                phone = content['result'][i][str(value)]
-                # print(phone)
-            contador += 1
-            if contador == 6:
-                contador = 0
-                patients.append(Patient(name,lastname,birthday,gender,password, phone))
+    for patient_ in content['result']:
+        patients.append(Patient(patient_['Nombre'],patient_['Apellido'],patient_['Fecha'],patient_['Sexo'],patient_['Contraseña'], patient_['Teléfono']))
 
     return {'message': 'patients cargados'}
     
@@ -308,5 +283,5 @@ def postActualizar():
     
         
 if __name__ == '__main__':
-    app.run(host= '0.0.0.0')
+    app.run(host= '192.168.0.11')
     app.run(debug=True)

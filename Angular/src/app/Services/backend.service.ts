@@ -24,7 +24,7 @@ export class BackendService {
   }
 
   cargarPacientes(pacientes:any){
-    return this.http.post( `http://192.168.0.11:5000/cargarPacientes`, pacientes);
+    return this.http.post( `http://192.168.0.11:5000/load-patients`, pacientes);
   }
   
   cargarDoctores(doctores:any){
